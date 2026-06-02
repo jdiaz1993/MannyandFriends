@@ -12,11 +12,11 @@ function Navbar() {
   return (
     <header className="navbar">
       <NavLink className="brand" to="/" aria-label="Doodles and Friends by Manny home">
-        <span className="brand-mark">🐾</span>
-        <span>
-          Doodles & Friends
-          <small>by Manny</small>
-        </span>
+        <img
+          className="brand-logo"
+          src="/doodles-friends-logo.png"
+          alt="Doodles & Friends by Manny"
+        />
       </NavLink>
 
       <nav className="nav-links" aria-label="Main navigation">

@@ -12,7 +12,7 @@ function About() {
             final bow.
           </p>
           <p>
-            Whether your dog needs a simple bath, a fresh haircut, nail care, or a full
+            Whether your dog needs a simple bath, a bath and clean up, nail care, or a full
             groom, the goal is always the same: a happy pup, a clean coat, and a family that
             feels confident about the care their dog received.
           </p>

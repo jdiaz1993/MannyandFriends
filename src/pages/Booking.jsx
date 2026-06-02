@@ -17,7 +17,7 @@ const priceCards = [
     ],
   },
   {
-    name: 'Haircut',
+    name: 'Bath and Clean Up',
     accent: 'blue',
     tiers: [
       { size: 'Small', weight: 'Up to 20 lbs', price: '$65+' },
@@ -72,7 +72,7 @@ const timeSlots = ['9:00 AM', '10:30 AM', '12:00 PM', '1:30 PM', '3:00 PM', '4:3
 
 const serviceOptions = [
   'Bath & Brush',
-  'Haircut',
+  'Bath and Clean Up',
   'Full Groom',
   'Nail Trim',
   'Puppy Groom',

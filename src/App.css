@@ -58,6 +58,21 @@ main {
   line-height: 0.9;
 }
 
+.brand-logo {
+  border: 3px solid #412b35;
+  border-radius: 22px;
+  box-shadow: 0 5px 0 #ffbdd3;
+  height: clamp(64px, 10vw, 96px);
+  object-fit: cover;
+  transition: box-shadow 180ms ease, transform 180ms ease;
+  width: clamp(64px, 10vw, 96px);
+}
+
+.brand:hover .brand-logo {
+  box-shadow: 0 3px 0 #8cd8ff;
+  transform: rotate(-2deg) translateY(2px);
+}
+
 .brand small {
   color: #ef5f98;
   display: block;
@@ -228,6 +243,17 @@ h3 {
   position: relative;
 }
 
+.hero-photo {
+  border: 5px solid #412b35;
+  border-radius: 42% 58% 45% 55%;
+  box-shadow: 0 0 0 8px rgba(255, 64, 178, 0.5), 0 0 24px rgba(183, 255, 61, 0.85);
+  height: 78%;
+  object-fit: cover;
+  position: relative;
+  width: 78%;
+  z-index: 1;
+}
+
 .dog-sticker {
   align-items: center;
   background: #fff8cf;
@@ -377,6 +403,46 @@ h3 {
 
 .service-card p {
   margin-bottom: 0;
+}
+
+.home-highlights {
+  padding-top: clamp(2.5rem, 5vw, 4rem);
+}
+
+.home-highlight-grid {
+  align-items: stretch;
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.home-highlight-card {
+  background: rgba(255, 250, 231, 0.94);
+  padding: clamp(1.25rem, 3vw, 1.75rem);
+  text-align: center;
+}
+
+.home-highlight-card.highlight-wide {
+  grid-column: span 2;
+}
+
+.home-highlight-card h3 {
+  background: #fff200;
+  color: #ff40b2;
+  display: inline;
+  font-family: 'Baloo 2', cursive;
+  font-size: clamp(1.2rem, 3vw, 1.7rem);
+  letter-spacing: 0.16em;
+  line-height: 1.35;
+  padding: 0 0.35rem;
+  text-transform: uppercase;
+}
+
+.home-highlight-card p {
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  font-weight: 600;
+  margin: 1rem auto 0;
+  max-width: 780px;
 }
 
 .callout {
@@ -1148,14 +1214,348 @@ textarea {
   color: #ffbdd3;
 }
 
+/* Logo-inspired palette refresh: teal, hot pink, neon yellow, black, and lime glow. */
+.site-shell {
+  background:
+    radial-gradient(circle at 14% 12%, rgba(250, 239, 48, 0.55) 0 13px, transparent 14px),
+    radial-gradient(circle at 82% 14%, rgba(255, 64, 178, 0.5) 0 18px, transparent 19px),
+    radial-gradient(circle at 66% 78%, rgba(171, 255, 54, 0.32) 0 22px, transparent 23px),
+    linear-gradient(135deg, #11a9c9 0%, #12a3c3 48%, #fff200 100%);
+}
+
+.site-shell::before {
+  color: rgba(17, 17, 22, 0.13);
+}
+
+.navbar,
+.sticker-card,
+.form-card,
+.admin-login-card,
+.admin-dashboard-header,
+.admin-empty-state,
+.admin-shell,
+.cancel-card {
+  background: rgba(255, 244, 164, 0.96);
+  border-color: #111116;
+  box-shadow: 8px 8px 0 rgba(255, 64, 178, 0.58);
+}
+
+.navbar {
+  background: linear-gradient(135deg, #fff200 0%, #11a9c9 46%, #ff40b2 100%);
+  box-shadow: 0 8px 0 #ff40b2, 0 14px 0 #b7ff3d, 0 0 24px rgba(255, 242, 0, 0.75);
+}
+
+.brand-logo {
+  border-color: #111116;
+  box-shadow: 0 5px 0 #ff40b2, 0 9px 18px rgba(183, 255, 61, 0.85);
+}
+
+.brand:hover .brand-logo {
+  box-shadow: 0 3px 0 #fff200, 0 8px 18px rgba(183, 255, 61, 0.95);
+}
+
+.navbar .nav-link {
+  background: rgba(255, 242, 0, 0.82);
+  border-color: #111116;
+  box-shadow: 0 4px 0 #111116;
+}
+
+.navbar .nav-link:hover,
+.navbar .nav-link.active {
+  background: #ff40b2;
+  box-shadow: 0 2px 0 #111116, 0 0 14px rgba(183, 255, 61, 0.95);
+}
+
+h1,
+h2,
+h3,
+label,
+.nav-link,
+.button,
+.price-tiers b,
+.time-slot,
+.status-pill,
+.filter-chip,
+.admin-action {
+  color: #111116;
+}
+
+.eyebrow,
+.rdp-footer,
+.contact-list strong,
+.admin-booking-grid strong,
+.cancel-booking-details strong,
+.price-tiers small {
+  color: #c9008f;
+}
+
+.nav-link:hover,
+.nav-link.active,
+.button-primary,
+.time-slot.selected,
+.rdp-selected .rdp-day_button,
+.filter-chip.active,
+.filter-chip:hover,
+.admin-action.delete,
+.booking-message.error,
+.status-cancelled,
+.price-pink {
+  background: #ff40b2;
+}
+
+.button-secondary,
+.hero-art,
+.time-slot,
+.booking-message.success,
+.filter-chip,
+.admin-action.cancel,
+.status-confirmed,
+.price-blue,
+.placeholder-blue .gallery-image {
+  background: #11a9c9;
+}
+
+.button-primary,
+.button-secondary,
+.nav-link:hover,
+.nav-link.active,
+.time-slot,
+.filter-chip,
+.admin-action,
+.status-pill,
+.bone-badge,
+.dog-bow {
+  color: #111116;
+}
+
+.button,
+.time-slot,
+.filter-chip,
+.admin-action,
+.status-pill,
+.bone-badge,
+.dog-bow,
+input,
+select,
+textarea,
+.calendar-field,
+.time-slot-field,
+.contact-list p,
+.admin-booking-grid p,
+.cancel-booking-details p,
+.price-tiers p,
+.gallery-image,
+.map-placeholder {
+  border-color: #111116;
+  box-shadow: 0 5px 0 #111116;
+}
+
+.button:hover,
+.time-slot:hover:not(:disabled),
+.filter-chip.active,
+.filter-chip:hover,
+.admin-action:hover:not(:disabled) {
+  box-shadow: 0 2px 0 #111116;
+}
+
+.wavy-section {
+  background:
+    linear-gradient(#fff56b, #fff56b) padding-box,
+    repeating-radial-gradient(circle at 0 0, #111116 0 4px, transparent 5px 24px) border-box;
+}
+
+.wavy-section::after {
+  background: #ff40b2;
+  border-color: #111116;
+  box-shadow: 0 0 18px rgba(183, 255, 61, 0.85);
+}
+
+.hero h1 {
+  color: #111116;
+  text-shadow: 4px 4px 0 #ff40b2, 8px 8px 0 #fff200, 12px 12px 0 #b7ff3d;
+}
+
+.hero-tagline,
+.section-heading p:not(.eyebrow),
+.about-copy p,
+.footer p {
+  color: #111116;
+}
+
+.dog-sticker,
+input,
+select,
+textarea,
+.price-tiers p,
+.admin-booking-grid p,
+.cancel-booking-details p,
+.contact-list p,
+.calendar-field,
+.time-slot-field {
+  background: #fffbd1;
+}
+
+.dog-sticker {
+  border-color: #111116;
+  box-shadow: inset 0 -14px 0 rgba(255, 64, 178, 0.45), 0 0 22px rgba(183, 255, 61, 0.85);
+}
+
+.dog-bow,
+.bone-badge {
+  background: #ff40b2;
+  border-color: #111116;
+}
+
+.hero-star,
+.price-sparkle,
+.sparkle {
+  color: #fff200;
+  text-shadow: 2px 2px 0 #111116, 0 0 10px rgba(183, 255, 61, 0.9);
+}
+
+.service-card:nth-child(2n),
+.placeholder-pink .gallery-image,
+.price-cream {
+  background: #fff56b;
+}
+
+.service-card:nth-child(3n),
+.price-yellow,
+.admin-action.complete,
+.status-completed,
+.rdp-day_button:hover:not([disabled]),
+.time-slot:hover:not(:disabled) {
+  background: #fff200;
+}
+
+.price-card,
+.gallery-card,
+.service-card {
+  box-shadow: 8px 8px 0 rgba(17, 17, 22, 0.32), 0 0 0 6px rgba(183, 255, 61, 0.18);
+}
+
+.price-card:hover,
+.service-card:hover,
+.gallery-card:hover {
+  box-shadow: 12px 12px 0 rgba(17, 17, 22, 0.36), 0 0 18px rgba(183, 255, 61, 0.8);
+}
+
+.placeholder-blue .gallery-image,
+.placeholder-yellow .gallery-image {
+  background: linear-gradient(135deg, #11a9c9, #fff200);
+}
+
+.placeholder-pink .gallery-image {
+  background: linear-gradient(135deg, #ff40b2, #11a9c9);
+}
+
+.rdp-root {
+  --rdp-accent-color: #ff40b2;
+  --rdp-accent-background-color: #ff40b2;
+  --rdp-selected-border: 3px solid #111116;
+}
+
+.rdp-month_caption,
+.rdp-button_next,
+.rdp-button_previous,
+.rdp-day_button {
+  color: #111116;
+}
+
+.rdp-selected .rdp-day_button {
+  box-shadow: 0 4px 0 #111116;
+}
+
+.time-slot:disabled {
+  background: #c9c9c9;
+  color: rgba(17, 17, 22, 0.58);
+}
+
+.map-placeholder {
+  background:
+    linear-gradient(45deg, rgba(17, 17, 22, 0.09) 25%, transparent 25% 50%, rgba(17, 17, 22, 0.09) 50% 75%, transparent 75%),
+    #11a9c9;
+  background-size: 28px 28px;
+}
+
+.footer {
+  background: #111116;
+  border-top: 8px solid #ff40b2;
+  box-shadow: 0 -8px 0 #b7ff3d;
+  color: #fff56b;
+}
+
+.footer h2,
+.footer p {
+  color: #fff56b;
+}
+
+.footer .eyebrow {
+  color: #ff40b2;
+}
+
+/* Responsive hardening for phones, tablets, and wide screens. */
+.hero-copy,
+.section-heading,
+.form-card,
+.sticker-card,
+.admin-booking-card,
+.contact-info,
+.contact-form,
+.cancel-card {
+  min-width: 0;
+}
+
+.navbar,
+.hero,
+.section,
+.page-section {
+  width: min(100%, 1180px);
+}
+
+input,
+select,
+textarea {
+  max-width: 100%;
+  min-width: 0;
+}
+
+.rdp-root {
+  width: min(100%, 370px);
+}
+
+.rdp-months,
+.rdp-month,
+.rdp-table {
+  max-width: 100%;
+}
+
+@media (min-width: 1280px) {
+  .hero,
+  .section,
+  .page-section {
+    max-width: 1240px;
+  }
+
+  .hero {
+    grid-template-columns: minmax(0, 1.12fr) minmax(360px, 480px);
+  }
+
+  .services-grid {
+    grid-template-columns: repeat(4, minmax(220px, 1fr));
+  }
+}
+
 @media (max-width: 900px) {
   .navbar {
     align-items: flex-start;
     flex-direction: column;
+    gap: 1rem;
   }
 
   .nav-links {
     justify-content: flex-start;
+    width: 100%;
   }
 
   .hero,
@@ -1172,6 +1572,14 @@ textarea {
     justify-self: center;
     max-width: 420px;
     width: 100%;
+  }
+
+  .hero-copy {
+    text-align: center;
+  }
+
+  .hero-actions {
+    justify-content: center;
   }
 
   .services-grid,
@@ -1204,8 +1612,12 @@ textarea {
   }
 
   .nav-link {
-    background: rgba(255, 236, 139, 0.5);
     font-size: 0.95rem;
+  }
+
+  .navbar .nav-link {
+    flex: 1 1 calc(50% - 0.5rem);
+    text-align: center;
   }
 
   .wavy-section {
@@ -1216,12 +1628,26 @@ textarea {
   .hero,
   .section,
   .page-section {
-    padding-left: 1rem;
-    padding-right: 1rem;
+    padding-left: 0.9rem;
+    padding-right: 0.9rem;
   }
 
   .hero h1 {
-    text-shadow: 3px 3px 0 #ffbdd3, 6px 6px 0 #8cd8ff;
+    font-size: clamp(3rem, 18vw, 5rem);
+    text-shadow: 3px 3px 0 #ff40b2, 6px 6px 0 #fff200, 9px 9px 0 #b7ff3d;
+  }
+
+  .hero-tagline {
+    font-size: 1.12rem;
+  }
+
+  .hero-art {
+    max-width: 360px;
+  }
+
+  .hero-photo {
+    height: 82%;
+    width: 82%;
   }
 
   .hero-actions,
@@ -1235,9 +1661,14 @@ textarea {
   .form-grid,
   .price-grid,
   .time-slot-grid,
+  .home-highlight-grid,
   .admin-booking-grid,
   .cancel-booking-details {
     grid-template-columns: 1fr;
+  }
+
+  .home-highlight-card.highlight-wide {
+    grid-column: auto;
   }
 
   .admin-booking-header,
@@ -1259,5 +1690,108 @@ textarea {
 
   .button {
     width: 100%;
+  }
+}
+
+@media (max-width: 430px) {
+  .navbar {
+    padding: 0.8rem;
+  }
+
+  .brand-logo {
+    height: 76px;
+    width: 76px;
+  }
+
+  .nav-links {
+    gap: 0.45rem;
+  }
+
+  .navbar .nav-link {
+    flex-basis: 100%;
+    padding: 0.55rem 0.75rem;
+  }
+
+  .hero,
+  .section,
+  .page-section {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
+  .wavy-section,
+  .sticker-card,
+  .form-card,
+  .price-card,
+  .service-card,
+  .gallery-card,
+  .admin-booking-card,
+  .cancel-card {
+    border-width: 3px;
+    border-radius: 22px;
+  }
+
+  .hero {
+    gap: 1.5rem;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.65rem, 17vw, 4rem);
+  }
+
+  .section-heading h1,
+  .section-heading h2,
+  .about-copy h1,
+  .admin-login-card h1,
+  .admin-shell h1,
+  .admin-dashboard-header h1,
+  .cancel-card h1 {
+    font-size: clamp(2.05rem, 13vw, 3rem);
+  }
+
+  .home-highlight-card,
+  .service-card,
+  .price-card,
+  .form-card,
+  .admin-booking-card,
+  .contact-info,
+  .cancel-card {
+    padding: 1rem;
+  }
+
+  .price-tiers p,
+  .admin-booking-grid p,
+  .cancel-booking-details p,
+  .contact-list p {
+    gap: 0.35rem;
+  }
+
+  .time-slot {
+    min-height: 56px;
+  }
+
+  .footer {
+    padding: 2rem 1rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .hero h1 {
+    font-size: 2.35rem;
+  }
+
+  .hero-tagline,
+  .section-heading p:not(.eyebrow),
+  .home-highlight-card p,
+  .about-copy p {
+    font-size: 0.98rem;
+  }
+
+  .button,
+  .time-slot,
+  input,
+  select,
+  textarea {
+    font-size: 0.95rem;
   }
 }

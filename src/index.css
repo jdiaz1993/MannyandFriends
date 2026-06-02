@@ -4,8 +4,8 @@
   font-family: 'Fredoka', system-ui, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  color: #412b35;
-  background: #fff7ca;
+  color: #111116;
+  background: #11a9c9;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -60,6 +60,6 @@ a:focus-visible,
 input:focus,
 select:focus,
 textarea:focus {
-  outline: 3px dashed #ff8ab3;
+  outline: 3px dashed #ff40b2;
   outline-offset: 4px;
 }
