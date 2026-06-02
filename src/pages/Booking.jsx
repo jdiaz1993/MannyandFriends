@@ -5,78 +5,108 @@ import { format, isBefore, startOfDay } from 'date-fns'
 import Button from '../components/Button'
 import { createBooking, getBookedSlots, isSlotBooked, sendBookingConfirmation } from '../lib/bookings'
 
-const priceCards = [
+const bathIncludes = [
+  'Double rinse for sensitive skin',
+  'Nail cut and filing',
+  'Teeth brushing',
+  'Ear cleaning',
+  'By request: Oat bath and gland expressing',
+]
+
+const priceSections = [
   {
-    name: 'Bath & Brush',
-    accent: 'pink',
-    tiers: [
-      { size: 'Small', weight: 'Up to 20 lbs', price: '$45+' },
-      { size: 'Medium', weight: '21-40 lbs', price: '$55+' },
-      { size: 'Large', weight: '41-70 lbs', price: '$70+' },
-      { size: 'XL', weight: '71+ lbs', price: '$85+' },
+    title: 'Dog Grooming',
+    cards: [
+      {
+        name: 'Bath Only',
+        accent: 'pink',
+        description: bathIncludes,
+        tiers: [
+          { size: 'Extra Small', weight: '', price: '$35 to $55' },
+          { size: 'Small', weight: '', price: '$40 to $65' },
+          { size: 'Medium', weight: '', price: '$45 to $65' },
+          { size: 'Large', weight: '', price: '$55 to $80' },
+          { size: 'Extra Large', weight: '', price: '$75 to $100' },
+        ],
+      },
+      {
+        name: 'Bath and Tidy Up',
+        accent: 'blue',
+        description: ['All bath services listed', 'Face trim', 'Sanitary trim'],
+        tiers: [
+          { size: 'Extra Small', weight: '', price: '$50 to $70' },
+          { size: 'Small', weight: '', price: '$55 to $75' },
+          { size: 'Medium', weight: '', price: '$60 to $80' },
+          { size: 'Large', weight: '', price: '$70 to $95' },
+          { size: 'Extra Large', weight: '', price: '$90 to $115' },
+        ],
+      },
+      {
+        name: 'Full Groom',
+        accent: 'yellow',
+        description: ['All bath services listed', 'All clean-up services listed'],
+        tiers: [
+          { size: 'Extra Small', weight: '', price: '$65 to $80' },
+          { size: 'Small', weight: '', price: '$75 to $95' },
+          { size: 'Medium', weight: '', price: '$95 to $125' },
+          { size: 'Large', weight: '', price: '$125 to $175' },
+          { size: 'Extra Large', weight: '', price: '$160 to $225' },
+        ],
+      },
     ],
   },
   {
-    name: 'Bath and Clean Up',
-    accent: 'blue',
-    tiers: [
-      { size: 'Small', weight: 'Up to 20 lbs', price: '$65+' },
-      { size: 'Medium', weight: '21-40 lbs', price: '$80+' },
-      { size: 'Large', weight: '41-70 lbs', price: '$95+' },
-      { size: 'XL', weight: '71+ lbs', price: '$115+' },
+    title: 'Cat Grooming',
+    cards: [
+      {
+        name: 'Bath Only',
+        accent: 'pink',
+        description: bathIncludes,
+        tiers: [
+          { size: 'Small', weight: '', price: '$85 to $140' },
+          { size: 'Medium', weight: '', price: '$95 to $150' },
+        ],
+      },
+      {
+        name: 'Full Groom',
+        accent: 'yellow',
+        description: ['All bath services listed', 'Full hair cut'],
+        tiers: [
+          { size: 'Small', weight: '', price: '$95 to $125' },
+          { size: 'Medium', weight: '', price: '$140 to $175' },
+        ],
+      },
     ],
   },
+]
+
+const addOns = [
   {
-    name: 'Full Groom',
-    accent: 'yellow',
-    tiers: [
-      { size: 'Small', weight: 'Up to 20 lbs', price: '$85+' },
-      { size: 'Medium', weight: '21-40 lbs', price: '$105+' },
-      { size: 'Large', weight: '41-70 lbs', price: '$130+' },
-      { size: 'XL', weight: '71+ lbs', price: '$155+' },
-    ],
+    name: 'Dematting',
+    description: 'Depending on thoroughness of knots, this can be a demanding process.',
+    price: '$25 / 30 mins',
   },
   {
-    name: 'Nail Trim',
-    accent: 'cream',
-    tiers: [
-      { size: 'Small', weight: 'Up to 20 lbs', price: '$15' },
-      { size: 'Medium', weight: '21-40 lbs', price: '$15' },
-      { size: 'Large', weight: '41-70 lbs', price: '$20' },
-      { size: 'XL', weight: '71+ lbs', price: '$20' },
-    ],
+    name: 'Parents to Join',
+    description: 'Parents are welcome to stay to comfort their pet during the grooming process.',
+    price: '$25 / 30 mins',
   },
   {
-    name: 'Puppy Groom',
-    accent: 'pink',
-    tiers: [
-      { size: 'Small', weight: 'Up to 20 lbs', price: '$55+' },
-      { size: 'Medium', weight: '21-40 lbs', price: '$65+' },
-      { size: 'Large', weight: '41-70 lbs', price: '$80+' },
-      { size: 'XL', weight: '71+ lbs', price: '$95+' },
-    ],
-  },
-  {
-    name: 'De-shedding Add-on',
-    accent: 'blue',
-    tiers: [
-      { size: 'Small', weight: 'Up to 20 lbs', price: '+$25' },
-      { size: 'Medium', weight: '21-40 lbs', price: '+$35' },
-      { size: 'Large', weight: '41-70 lbs', price: '+$45' },
-      { size: 'XL', weight: '71+ lbs', price: '+$55' },
-    ],
+    name: 'Additional Time',
+    description: 'For pets who need extra care, calming time, or additional handling support.',
+    price: '$25 / 10 mins',
   },
 ]
 
 const timeSlots = ['9:00 AM', '10:30 AM', '12:00 PM', '1:30 PM', '3:00 PM', '4:30 PM']
 
 const serviceOptions = [
-  'Bath & Brush',
-  'Bath and Clean Up',
-  'Full Groom',
-  'Nail Trim',
-  'Puppy Groom',
-  'De-shedding Add-on',
+  'Dog Bath Only',
+  'Dog Bath and Tidy Up',
+  'Dog Full Groom',
+  'Cat Bath Only',
+  'Cat Full Groom',
+  'Add-on Service',
 ]
 
 function Booking() {
@@ -209,26 +239,52 @@ function Booking() {
           <p>Prices vary by size, weight, coat condition, and grooming needs.</p>
         </div>
 
-        <div className="price-grid">
-          {priceCards.map((card) => (
-            <article className={`price-card sticker-card price-${card.accent}`} key={card.name}>
-              <span className="price-sparkle" aria-hidden="true">
-                ✦
-              </span>
-              <h3>{card.name}</h3>
-              <div className="price-tiers">
-                {card.tiers.map((tier) => (
-                  <p key={`${card.name}-${tier.size}`}>
-                    <span>
-                      <strong>{tier.size}</strong>
-                      <small>{tier.weight}</small>
-                    </span>
-                    <b>{tier.price}</b>
-                  </p>
-                ))}
-              </div>
-            </article>
-          ))}
+        {priceSections.map((section) => (
+          <div className="price-section" key={section.title}>
+            <h3 className="price-section-title">{section.title}</h3>
+            <div className="price-grid">
+              {section.cards.map((card) => (
+                <article className={`price-card sticker-card price-${card.accent}`} key={card.name}>
+                  <span className="price-sparkle" aria-hidden="true">
+                    ✦
+                  </span>
+                  <h3>{card.name}</h3>
+                  <ul className="price-description">
+                    {card.description.map((item) => (
+                      <li key={`${card.name}-${item}`}>{item}</li>
+                    ))}
+                  </ul>
+                  <div className="price-tiers">
+                    {card.tiers.map((tier) => (
+                      <p key={`${section.title}-${card.name}-${tier.size}`}>
+                        <span>
+                          <strong>{tier.size}</strong>
+                          {tier.weight && <small>{tier.weight}</small>}
+                        </span>
+                        <b>{tier.price}</b>
+                      </p>
+                    ))}
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        ))}
+
+        <div className="price-section">
+          <h3 className="price-section-title">Add Ons</h3>
+          <div className="price-grid add-on-grid">
+            {addOns.map((addOn) => (
+              <article className="price-card add-on-card sticker-card price-cream" key={addOn.name}>
+                <span className="price-sparkle" aria-hidden="true">
+                  ✦
+                </span>
+                <h3>{addOn.name}</h3>
+                <p className="add-on-description">{addOn.description}</p>
+                <b className="add-on-price">{addOn.price}</b>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 

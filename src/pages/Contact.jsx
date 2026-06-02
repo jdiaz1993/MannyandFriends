@@ -1,9 +1,13 @@
 import Button from '../components/Button'
 
 const contactItems = [
-  { label: 'Phone', value: '(555) 123-PAWS' },
-  { label: 'Email', value: 'hello@doodlesandfriends.com' },
-  { label: 'Instagram', value: '@doodlesandfriendsbymanny' },
+  { label: 'Phone', value: '(323) 303-8498' },
+  { label: 'Email', value: 'manueledvasquez@gmail.com' },
+  {
+    label: 'Instagram',
+    value: '@doodlesandfriendsbymanny',
+    href: 'https://www.instagram.com/doodlesandfriendsbymanny',
+  },
   { label: 'Service area', value: 'Local doodles, pups, and furry friends' },
 ]
 
@@ -23,7 +27,13 @@ function Contact() {
             {contactItems.map((item) => (
               <p key={item.label}>
                 <strong>{item.label}</strong>
-                <span>{item.value}</span>
+                {item.href ? (
+                  <a className="contact-link" href={item.href} target="_blank" rel="noreferrer">
+                    {item.value}
+                  </a>
+                ) : (
+                  <span>{item.value}</span>
+                )}
               </p>
             ))}
           </div>
