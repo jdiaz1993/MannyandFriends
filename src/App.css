@@ -101,6 +101,25 @@ main {
   justify-content: flex-end;
 }
 
+.nav-toggle {
+  align-items: center;
+  background: #fff200;
+  border: 3px solid #111116;
+  border-radius: 999px;
+  box-shadow: 0 4px 0 #111116;
+  color: #111116;
+  display: none;
+  font-family: 'Baloo 2', cursive;
+  font-weight: 800;
+  gap: 0.45rem;
+  padding: 0.55rem 0.9rem;
+}
+
+.nav-toggle span {
+  font-size: 1.15rem;
+  line-height: 1;
+}
+
 .nav-link {
   border: 2px solid transparent;
   border-radius: 999px;
@@ -1606,9 +1625,31 @@ textarea {
 
 @media (max-width: 620px) {
   .navbar {
+    align-items: center;
     border-left: 0;
     border-radius: 0 0 24px 24px;
     border-right: 0;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: space-between;
+  }
+
+  .nav-toggle {
+    display: inline-flex;
+  }
+
+  .nav-links {
+    align-items: stretch;
+    display: none;
+    flex-basis: 100%;
+    flex-direction: column;
+    gap: 0.6rem;
+    width: 100%;
+  }
+
+  .nav-links.open {
+    display: flex;
   }
 
   .nav-link {
@@ -1616,8 +1657,9 @@ textarea {
   }
 
   .navbar .nav-link {
-    flex: 1 1 calc(50% - 0.5rem);
+    flex: none;
     text-align: center;
+    width: 100%;
   }
 
   .wavy-section {
@@ -1707,8 +1749,11 @@ textarea {
     gap: 0.45rem;
   }
 
+  .nav-toggle {
+    padding: 0.5rem 0.75rem;
+  }
+
   .navbar .nav-link {
-    flex-basis: 100%;
     padding: 0.55rem 0.75rem;
   }
 
