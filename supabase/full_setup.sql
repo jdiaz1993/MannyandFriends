@@ -9,8 +9,22 @@ create table if not exists public.bookings (
   owner_name text not null,
   phone text not null,
   email text not null,
+  home_address text,
+  city_state_zip text,
+  owner_home_phone text,
+  owner_work_phone text,
+  guardian_home_phone text,
+  guardian_cell_phone text,
+  guardian_work_phone text,
   dog_name text not null,
   dog_breed text,
+  pet_type text,
+  pet_type_other text,
+  pet_weight text,
+  pet_sex text,
+  pet_date_of_birth date,
+  pet_color text,
+  spayed_neutered text,
   service_type text not null,
   appointment_date date not null,
   appointment_time text not null,
@@ -22,6 +36,22 @@ create table if not exists public.bookings (
 
 alter table public.bookings
 add column if not exists cancellation_token text unique;
+
+alter table public.bookings
+add column if not exists home_address text,
+add column if not exists city_state_zip text,
+add column if not exists owner_home_phone text,
+add column if not exists owner_work_phone text,
+add column if not exists guardian_home_phone text,
+add column if not exists guardian_cell_phone text,
+add column if not exists guardian_work_phone text,
+add column if not exists pet_type text,
+add column if not exists pet_type_other text,
+add column if not exists pet_weight text,
+add column if not exists pet_sex text,
+add column if not exists pet_date_of_birth date,
+add column if not exists pet_color text,
+add column if not exists spayed_neutered text;
 
 alter table public.bookings enable row level security;
 

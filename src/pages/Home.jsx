@@ -54,11 +54,8 @@ function Home() {
     <>
       <section className="hero wavy-section">
         <div className="hero-copy">
-          <p className="eyebrow">Playful grooming for fluffy besties</p>
           <h1>Doodles & Friends by Manny</h1>
-          <p className="hero-tagline">
-            Individual kennel free grooming for doodles and friends (cats are friends too)
-          </p>
+        
           <div className="hero-actions">
             <Button to="/booking">Book an Appointment</Button>
             <Button to="/gallery" variant="secondary">
@@ -82,7 +79,7 @@ function Home() {
 
       <section className="section home-highlights">
         <div className="section-heading">
-          <p className="eyebrow">What Makes Us Different</p>
+          <p className="eyebrow">What Makes Me Different</p>
           <h2>Kennel-Free Care for Every Friend</h2>
         </div>
 

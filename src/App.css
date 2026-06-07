@@ -697,11 +697,34 @@ h3 {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+.form-grid.compact {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
 label {
   color: #412b35;
   display: grid;
   font-weight: 800;
   gap: 0.35rem;
+}
+
+fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+legend {
+  color: #412b35;
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.5rem;
+  font-weight: 900;
+  margin-bottom: 0.8rem;
+}
+
+.intake-section-note {
+  font-weight: 700;
+  margin-bottom: 1rem;
 }
 
 input,
@@ -723,6 +746,7 @@ textarea {
 }
 
 .calendar-field,
+.intake-section,
 .time-slot-field {
   background: rgba(255, 253, 244, 0.74);
   border: 3px solid #412b35;
@@ -1168,6 +1192,25 @@ textarea {
   font-size: 0.82rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+}
+
+.admin-record-details {
+  background: #dff4ff;
+  border: 3px solid #412b35;
+  border-radius: 20px;
+  margin-top: 1rem;
+  padding: 1rem;
+}
+
+.admin-record-details summary {
+  cursor: pointer;
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.15rem;
+  font-weight: 900;
+}
+
+.admin-record-details .admin-booking-grid {
+  margin-top: 1rem;
 }
 
 .admin-card-actions {
@@ -1959,6 +2002,7 @@ textarea {
   .services-grid,
   .gallery-grid,
   .form-grid,
+  .form-grid.compact,
   .price-grid,
   .add-on-grid,
   .time-slot-grid,

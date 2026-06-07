@@ -9,6 +9,22 @@ create table if not exists public.admins (
 alter table public.bookings
 add column if not exists cancellation_token text unique;
 
+alter table public.bookings
+add column if not exists home_address text,
+add column if not exists city_state_zip text,
+add column if not exists owner_home_phone text,
+add column if not exists owner_work_phone text,
+add column if not exists guardian_home_phone text,
+add column if not exists guardian_cell_phone text,
+add column if not exists guardian_work_phone text,
+add column if not exists pet_type text,
+add column if not exists pet_type_other text,
+add column if not exists pet_weight text,
+add column if not exists pet_sex text,
+add column if not exists pet_date_of_birth date,
+add column if not exists pet_color text,
+add column if not exists spayed_neutered text;
+
 create or replace function public.get_booked_slots(p_appointment_date date)
 returns table (appointment_time text)
 language sql

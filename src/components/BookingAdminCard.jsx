@@ -1,5 +1,6 @@
 function BookingAdminCard({ booking, onCancel, onComplete, onDelete, isUpdating }) {
   const status = booking.status || 'confirmed'
+  const petType = booking.pet_type === 'Other' && booking.pet_type_other ? booking.pet_type_other : booking.pet_type
 
   return (
     <article className="admin-booking-card sticker-card">
@@ -39,6 +40,64 @@ function BookingAdminCard({ booking, onCancel, onComplete, onDelete, isUpdating 
           <span>{booking.notes || 'No notes'}</span>
         </p>
       </div>
+
+      <details className="admin-record-details">
+        <summary>Client & pet record</summary>
+        <div className="admin-booking-grid">
+          <p>
+            <strong>Address</strong>
+            <span>{booking.home_address || 'Not provided'}</span>
+          </p>
+          <p>
+            <strong>City / State / Zip</strong>
+            <span>{booking.city_state_zip || 'Not provided'}</span>
+          </p>
+          <p>
+            <strong>Owner home</strong>
+            <span>{booking.owner_home_phone || 'Not provided'}</span>
+          </p>
+          <p>
+            <strong>Owner work</strong>
+            <span>{booking.owner_work_phone || 'Not provided'}</span>
+          </p>
+          <p>
+            <strong>Guardian home</strong>
+            <span>{booking.guardian_home_phone || 'Not provided'}</span>
+          </p>
+          <p>
+            <strong>Guardian cell</strong>
+            <span>{booking.guardian_cell_phone || 'Not provided'}</span>
+          </p>
+          <p>
+            <strong>Guardian work</strong>
+            <span>{booking.guardian_work_phone || 'Not provided'}</span>
+          </p>
+          <p>
+            <strong>Pet type</strong>
+            <span>{petType || 'Not provided'}</span>
+          </p>
+          <p>
+            <strong>Weight</strong>
+            <span>{booking.pet_weight || 'Not provided'}</span>
+          </p>
+          <p>
+            <strong>Sex</strong>
+            <span>{booking.pet_sex || 'Not provided'}</span>
+          </p>
+          <p>
+            <strong>Date of birth</strong>
+            <span>{booking.pet_date_of_birth || 'Not provided'}</span>
+          </p>
+          <p>
+            <strong>Color</strong>
+            <span>{booking.pet_color || 'Not provided'}</span>
+          </p>
+          <p>
+            <strong>Spayed / neutered</strong>
+            <span>{booking.spayed_neutered || 'Not provided'}</span>
+          </p>
+        </div>
+      </details>
 
       <div className="admin-card-actions">
         <button

@@ -185,8 +185,22 @@ function Booking() {
         owner_name: formData.get('ownerName'),
         phone: formData.get('phone'),
         email: formData.get('email'),
+        home_address: formData.get('homeAddress'),
+        city_state_zip: formData.get('cityStateZip'),
+        owner_home_phone: formData.get('ownerHomePhone'),
+        owner_work_phone: formData.get('ownerWorkPhone'),
+        guardian_home_phone: formData.get('guardianHomePhone'),
+        guardian_cell_phone: formData.get('guardianCellPhone'),
+        guardian_work_phone: formData.get('guardianWorkPhone'),
         dog_name: formData.get('dogName'),
         dog_breed: formData.get('breed'),
+        pet_type: formData.get('petType'),
+        pet_type_other: formData.get('petTypeOther'),
+        pet_weight: formData.get('petWeight'),
+        pet_sex: formData.get('petSex'),
+        pet_date_of_birth: formData.get('petDateOfBirth') || null,
+        pet_color: formData.get('petColor'),
+        spayed_neutered: formData.get('spayedNeutered'),
         service_type: formData.get('serviceType'),
         appointment_date: selectedDateValue,
         appointment_time: selectedTime,
@@ -290,26 +304,114 @@ function Booking() {
 
       <form className="form-card sticker-card" onSubmit={handleSubmit}>
         <div className="form-grid">
-          <label>
-            Owner name
-            <input name="ownerName" type="text" placeholder="Your name" required />
-          </label>
-          <label>
-            Phone number
-            <input name="phone" type="tel" placeholder="(555) 123-4567" required />
-          </label>
-          <label>
-            Email
-            <input name="email" type="email" placeholder="hello@example.com" required />
-          </label>
-          <label>
-            Dog name
-            <input name="dogName" type="text" placeholder="Fluffy" required />
-          </label>
-          <label>
-            Breed
-            <input name="breed" type="text" placeholder="Goldendoodle, Poodle, etc." />
-          </label>
+          <fieldset className="intake-section full-span">
+            <legend>Client Record</legend>
+            <p className="intake-section-note">This information is saved with your appointment for Manny's records.</p>
+            <div className="form-grid compact">
+              <label>
+                Owner name
+                <input name="ownerName" type="text" placeholder="Your name" required />
+              </label>
+              <label>
+                Cell phone
+                <input name="phone" type="tel" placeholder="(555) 123-4567" required />
+              </label>
+              <label>
+                Email
+                <input name="email" type="email" placeholder="hello@example.com" required />
+              </label>
+              <label>
+                Home address
+                <input name="homeAddress" type="text" placeholder="Street address" required />
+              </label>
+              <label>
+                City / State / Zip
+                <input name="cityStateZip" type="text" placeholder="Los Angeles, CA 90001" required />
+              </label>
+              <label>
+                Owner home phone
+                <input name="ownerHomePhone" type="tel" placeholder="Optional" />
+              </label>
+              <label>
+                Owner work phone
+                <input name="ownerWorkPhone" type="tel" placeholder="Optional" />
+              </label>
+            </div>
+          </fieldset>
+          <fieldset className="intake-section full-span">
+            <legend>Guardian Contact</legend>
+            <div className="form-grid compact">
+              <label>
+                Home phone
+                <input name="guardianHomePhone" type="tel" placeholder="Optional" />
+              </label>
+              <label>
+                Cell phone
+                <input name="guardianCellPhone" type="tel" placeholder="Optional" />
+              </label>
+              <label>
+                Work phone
+                <input name="guardianWorkPhone" type="tel" placeholder="Optional" />
+              </label>
+            </div>
+          </fieldset>
+          <fieldset className="intake-section full-span">
+            <legend>Pet Information</legend>
+            <div className="form-grid compact">
+              <label>
+                Pet name
+                <input name="dogName" type="text" placeholder="Fluffy" required />
+              </label>
+              <label>
+                Pet type
+                <select name="petType" defaultValue="Dog" required>
+                  <option>Dog</option>
+                  <option>Cat</option>
+                  <option>Other</option>
+                </select>
+              </label>
+              <label>
+                If other, tell us
+                <input name="petTypeOther" type="text" placeholder="Optional" />
+              </label>
+              <label>
+                Breed
+                <input name="breed" type="text" placeholder="Goldendoodle, Poodle, etc." />
+              </label>
+              <label>
+                Weight
+                <input name="petWeight" type="text" placeholder="Approx. weight" required />
+              </label>
+              <label>
+                Sex
+                <select name="petSex" defaultValue="" required>
+                  <option value="" disabled>
+                    Choose one
+                  </option>
+                  <option>Male</option>
+                  <option>Female</option>
+                </select>
+              </label>
+              <label>
+                Date of birth
+                <input name="petDateOfBirth" type="date" />
+              </label>
+              <label>
+                Color
+                <input name="petColor" type="text" placeholder="Coat color" required />
+              </label>
+              <label>
+                Spayed / neutered
+                <select name="spayedNeutered" defaultValue="" required>
+                  <option value="" disabled>
+                    Choose one
+                  </option>
+                  <option>Yes</option>
+                  <option>No</option>
+                </select>
+              </label>
+            </div>
+          </fieldset>
           <label>
             Service type
             <select name="serviceType" defaultValue="" required>
