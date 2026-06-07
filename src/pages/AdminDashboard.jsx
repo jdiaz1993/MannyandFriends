@@ -1,4 +1,7 @@
+import { format, parseISO } from 'date-fns'
 import { useEffect, useMemo, useState } from 'react'
+import { DayPicker } from 'react-day-picker'
+import 'react-day-picker/style.css'
 import { useNavigate } from 'react-router-dom'
 import BookingAdminCard from '../components/BookingAdminCard'
 import Button from '../components/Button'
@@ -7,10 +10,17 @@ import { supabase } from '../lib/supabase'
 
 const filters = ['all', 'confirmed', 'cancelled', 'completed']
 
+function shouldAutoCompleteBooking(booking, todayKey) {
+  const status = booking.status || 'confirmed'
+  return status === 'confirmed' && booking.appointment_date < todayKey
+}
+
 function AdminDashboard() {
   const navigate = useNavigate()
   const [bookings, setBookings] = useState([])
   const [activeFilter, setActiveFilter] = useState('all')
+  const [selectedDate, setSelectedDate] = useState(() => new Date())
+  const [currentMonth, setCurrentMonth] = useState(() => new Date())
   const [isLoading, setIsLoading] = useState(true)
   const [updatingId, setUpdatingId] = useState('')
   const [message, setMessage] = useState({ type: '', text: '' })
@@ -23,13 +33,59 @@ function AdminDashboard() {
     return bookings.filter((booking) => booking.status === activeFilter)
   }, [activeFilter, bookings])
 
+  const bookingsByDate = useMemo(() => {
+    return filteredBookings.reduce((bookingMap, booking) => {
+      const dateKey = booking.appointment_date
+      const currentBookings = bookingMap.get(dateKey) ?? []
+      bookingMap.set(dateKey, [...currentBookings, booking])
+      return bookingMap
+    }, new Map())
+  }, [filteredBookings])
+
+  const bookedDates = useMemo(() => {
+    return [...bookingsByDate.keys()].map((dateKey) => parseISO(dateKey))
+  }, [bookingsByDate])
+
+  const selectedDateBookings = useMemo(() => {
+    return bookingsByDate.get(format(selectedDate, 'yyyy-MM-dd')) ?? []
+  }, [bookingsByDate, selectedDate])
+
+  const monthBookingCount = useMemo(() => {
+    return filteredBookings.filter((booking) => {
+      const bookingDate = parseISO(booking.appointment_date)
+      return (
+        bookingDate.getMonth() === currentMonth.getMonth() &&
+        bookingDate.getFullYear() === currentMonth.getFullYear()
+      )
+    }).length
+  }, [currentMonth, filteredBookings])
+
   async function loadBookings() {
     setIsLoading(true)
     setMessage({ type: '', text: '' })
 
     try {
       const data = await fetchAdminBookings()
-      setBookings(data)
+      const todayKey = format(new Date(), 'yyyy-MM-dd')
+      const pastConfirmedBookings = data.filter((booking) => shouldAutoCompleteBooking(booking, todayKey))
+      let updatedBookings = data
+
+      if (pastConfirmedBookings.length > 0) {
+        await Promise.all(pastConfirmedBookings.map((booking) => updateBookingStatus(booking.id, 'completed')))
+
+        const completedBookingIds = new Set(pastConfirmedBookings.map((booking) => booking.id))
+        updatedBookings = data.map((booking) =>
+          completedBookingIds.has(booking.id) ? { ...booking, status: 'completed' } : booking,
+        )
+      }
+
+      setBookings(updatedBookings)
+
+      if (updatedBookings.length > 0) {
+        const firstBookingDate = parseISO(updatedBookings[0].appointment_date)
+        setSelectedDate(firstBookingDate)
+        setCurrentMonth(firstBookingDate)
+      }
     } catch (error) {
       setMessage({ type: 'error', text: error.message })
     } finally {
@@ -84,13 +140,17 @@ function AdminDashboard() {
     navigate('/admin/login')
   }
 
+  function getDayBookingCount(date) {
+    return bookingsByDate.get(format(date, 'yyyy-MM-dd'))?.length ?? 0
+  }
+
   return (
     <section className="page-section admin-page">
       <div className="admin-dashboard-header sticker-card">
         <div>
           <p className="eyebrow">Admin Dashboard</p>
-          <h1>Booking Manager</h1>
-          <p>Review appointments, update statuses, and keep Manny's calendar tidy.</p>
+          <h1>Booking Calendar</h1>
+          <p>Browse appointments by month, then tap a day to manage bookings.</p>
         </div>
         <div className="admin-header-actions">
           <Button variant="secondary" onClick={loadBookings} disabled={isLoading}>
@@ -115,29 +175,103 @@ function AdminDashboard() {
 
       {message.text && <p className={`booking-message ${message.type}`}>{message.text}</p>}
 
-      {isLoading ? (
-        <div className="admin-empty-state sticker-card">
-          <h2>Loading bookings...</h2>
-        </div>
-      ) : filteredBookings.length > 0 ? (
-        <div className="admin-booking-list">
-          {filteredBookings.map((booking) => (
-            <BookingAdminCard
-              booking={booking}
-              isUpdating={updatingId === booking.id}
-              key={booking.id}
-              onCancel={(id) => handleStatusUpdate(id, 'cancelled')}
-              onComplete={(id) => handleStatusUpdate(id, 'completed')}
-              onDelete={handleDelete}
+      <div className="admin-calendar-dashboard">
+        <div className="admin-calendar-field sticker-card">
+          <div className="admin-calendar-intro">
+            <div>
+              <p className="eyebrow">{monthBookingCount} appointments in {format(currentMonth, 'MMMM')}</p>
+              <h2>{format(currentMonth, 'MMMM yyyy')}</h2>
+            </div>
+            <p className="admin-calendar-hint">Days with bookings are highlighted. Select a day to see details below.</p>
+          </div>
+
+          {isLoading ? (
+            <p className="admin-calendar-loading">Loading calendar...</p>
+          ) : (
+            <DayPicker
+              className="admin-calendar-picker"
+              components={{
+                DayButton: ({ day, modifiers, ...buttonProps }) => {
+                  const bookingCount = getDayBookingCount(day.date)
+
+                  return (
+                    <button {...buttonProps}>
+                      <span className="admin-calendar-day-label">{day.date.getDate()}</span>
+                      {bookingCount > 0 && (
+                        <span className="admin-calendar-day-count" aria-hidden="true">
+                          {bookingCount}
+                        </span>
+                      )}
+                      {modifiers.booked && <span className="sr-only">{bookingCount} appointments</span>}
+                    </button>
+                  )
+                },
+              }}
+              footer={
+                selectedDate
+                  ? `Selected: ${format(selectedDate, 'EEEE, MMMM d, yyyy')}`
+                  : 'Select a day to view appointments.'
+              }
+              mode="single"
+              month={currentMonth}
+              modifiers={{
+                booked: bookedDates,
+                selected: selectedDate,
+              }}
+              modifiersClassNames={{
+                booked: 'admin-day-booked',
+              }}
+              onMonthChange={setCurrentMonth}
+              onSelect={(date) => {
+                if (date) {
+                  setSelectedDate(date)
+                }
+              }}
+              selected={selectedDate}
+              showOutsideDays
             />
-          ))}
+          )}
         </div>
-      ) : (
-        <div className="admin-empty-state sticker-card">
-          <h2>No bookings found.</h2>
-          <p>Try another filter or refresh the dashboard.</p>
-        </div>
-      )}
+
+        {!isLoading && filteredBookings.length === 0 && (
+          <div className="admin-empty-state sticker-card">
+            <h2>No bookings found.</h2>
+            <p>Try another filter or refresh the dashboard.</p>
+          </div>
+        )}
+
+        {!isLoading && filteredBookings.length > 0 && (
+          <div className="admin-selected-day sticker-card">
+            <div className="admin-selected-day-header">
+              <p className="eyebrow">Appointments</p>
+              <h2>{format(selectedDate, 'MMMM d, yyyy')}</h2>
+              <p>
+                {selectedDateBookings.length} appointment{selectedDateBookings.length === 1 ? '' : 's'} on this day
+              </p>
+            </div>
+
+            {selectedDateBookings.length > 0 ? (
+              <div className="admin-day-bookings">
+                {selectedDateBookings.map((booking) => (
+                  <BookingAdminCard
+                    booking={booking}
+                    isUpdating={updatingId === booking.id}
+                    key={booking.id}
+                    onCancel={(id) => handleStatusUpdate(id, 'cancelled')}
+                    onComplete={(id) => handleStatusUpdate(id, 'completed')}
+                    onDelete={handleDelete}
+                  />
+                ))}
+              </div>
+            ) : (
+              <div className="admin-empty-state compact">
+                <h3>No bookings on this day.</h3>
+                <p>Pick a highlighted date on the calendar to review appointments.</p>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
     </section>
   )
 }

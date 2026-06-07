@@ -947,9 +947,150 @@ textarea {
   transform: translateY(2px) rotate(-1deg);
 }
 
-.admin-booking-list {
+.admin-day-bookings {
   display: grid;
   gap: 1.25rem;
+}
+
+.admin-calendar-dashboard {
+  align-items: start;
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: minmax(0, 1.05fr) minmax(340px, 0.95fr);
+}
+
+.admin-calendar-field {
+  background: #fff8cf;
+  padding: clamp(1.25rem, 4vw, 2rem);
+}
+
+.admin-calendar-intro {
+  display: grid;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.admin-calendar-intro h2 {
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  line-height: 1;
+  margin-bottom: 0;
+}
+
+.admin-calendar-hint,
+.admin-calendar-loading {
+  font-weight: 700;
+  margin-bottom: 0;
+}
+
+.admin-calendar-field .rdp-root {
+  margin: 0 auto;
+  max-width: none;
+  width: min(100%, 760px);
+}
+
+.admin-calendar-field .rdp-months {
+  justify-content: center;
+  width: 100%;
+}
+
+.admin-calendar-field .rdp-month {
+  width: 100%;
+}
+
+.admin-calendar-field .rdp-day_button {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  justify-content: center;
+  min-height: 3.4rem;
+  position: relative;
+  width: 100%;
+}
+
+.admin-calendar-day-label {
+  font-family: 'Baloo 2', cursive;
+  font-size: 1rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.admin-calendar-day-count {
+  background: #8cd8ff;
+  border: 2px solid #412b35;
+  border-radius: 999px;
+  font-family: 'Fredoka', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 800;
+  line-height: 1;
+  min-width: 1.15rem;
+  padding: 0.12rem 0.3rem;
+}
+
+.admin-day-booked .rdp-day_button {
+  background: #dff4ff;
+  border-color: #412b35;
+}
+
+.admin-selected-day {
+  background: rgba(255, 250, 231, 0.96);
+  padding: clamp(1.25rem, 4vw, 2rem);
+  position: sticky;
+  top: 1rem;
+}
+
+.admin-selected-day-header {
+  margin-bottom: 1.25rem;
+}
+
+.admin-selected-day-header h2 {
+  font-size: clamp(1.9rem, 4vw, 3rem);
+  line-height: 1;
+  margin-bottom: 0.35rem;
+}
+
+.admin-selected-day-header p:last-child {
+  font-weight: 800;
+  margin-bottom: 0;
+}
+
+.admin-selected-day .admin-booking-card {
+  padding: 1rem;
+}
+
+.admin-selected-day .admin-booking-header {
+  display: grid;
+}
+
+.admin-selected-day .admin-booking-header h2 {
+  font-size: clamp(1.65rem, 3vw, 2.2rem);
+}
+
+.admin-selected-day .admin-booking-grid {
+  grid-template-columns: 1fr;
+}
+
+.sr-only {
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+.admin-empty-state.compact {
+  background: #dff4ff;
+  border: 3px solid #412b35;
+  border-radius: 20px;
+  padding: 1rem;
+}
+
+.admin-empty-state.compact h3 {
+  margin-bottom: 0.35rem;
 }
 
 .admin-booking-card {
@@ -1725,6 +1866,14 @@ textarea {
 
   .admin-header-actions {
     justify-content: flex-start;
+  }
+
+  .admin-calendar-dashboard {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-selected-day {
+    position: static;
   }
 
   .admin-booking-grid {
