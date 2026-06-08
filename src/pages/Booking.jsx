@@ -209,14 +209,11 @@ function Booking() {
       })
 
       let emailWasSent = true
-      let emailErrorMessage =
-        'Your appointment is confirmed, but the confirmation email could not be sent. Please contact Manny if you need to cancel.'
 
       try {
         await sendBookingConfirmation(booking)
-      } catch (error) {
+      } catch {
         emailWasSent = false
-        emailErrorMessage = error.message
       }
 
       form.reset()
@@ -224,10 +221,10 @@ function Booking() {
       setSelectedTime('')
       setBookedSlots([])
       setMessage({
-        type: emailWasSent ? 'success' : 'error',
+        type: 'success',
         text: emailWasSent
           ? 'Your appointment is confirmed! Please check your email for the details and cancellation link.'
-          : emailErrorMessage,
+          : 'Your appointment is confirmed! Manny will contact you if any details are needed.',
       })
     } catch (error) {
       setMessage({ type: 'error', text: error.message })

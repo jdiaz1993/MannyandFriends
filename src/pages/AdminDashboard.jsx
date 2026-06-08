@@ -1,11 +1,16 @@
 import { format, parseISO } from 'date-fns'
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { DayPicker } from 'react-day-picker'
 import 'react-day-picker/style.css'
 import { useNavigate } from 'react-router-dom'
 import BookingAdminCard from '../components/BookingAdminCard'
 import Button from '../components/Button'
 import { deleteBooking, fetchAdminBookings, updateBookingStatus } from '../lib/adminBookings'
+import {
+  deleteContactMessage,
+  fetchAdminContactMessages,
+  updateContactMessageStatus,
+} from '../lib/contactMessages'
 import { supabase } from '../lib/supabase'
 
 const filters = ['all', 'confirmed', 'cancelled', 'completed']
@@ -22,7 +27,10 @@ function AdminDashboard() {
   const [selectedDate, setSelectedDate] = useState(() => new Date())
   const [currentMonth, setCurrentMonth] = useState(() => new Date())
   const [isLoading, setIsLoading] = useState(true)
+  const [contactMessages, setContactMessages] = useState([])
+  const [isLoadingContactMessages, setIsLoadingContactMessages] = useState(true)
   const [updatingId, setUpdatingId] = useState('')
+  const [updatingMessageId, setUpdatingMessageId] = useState('')
   const [message, setMessage] = useState({ type: '', text: '' })
 
   const filteredBookings = useMemo(() => {
@@ -60,7 +68,11 @@ function AdminDashboard() {
     }).length
   }, [currentMonth, filteredBookings])
 
-  async function loadBookings() {
+  const unreadMessageCount = useMemo(() => {
+    return contactMessages.filter((contactMessage) => contactMessage.status === 'unread').length
+  }, [contactMessages])
+
+  const loadBookings = useCallback(async function loadBookings() {
     setIsLoading(true)
     setMessage({ type: '', text: '' })
 
@@ -91,11 +103,29 @@ function AdminDashboard() {
     } finally {
       setIsLoading(false)
     }
-  }
+  }, [])
+
+  const loadContactMessages = useCallback(async function loadContactMessages() {
+    setIsLoadingContactMessages(true)
+
+    try {
+      const data = await fetchAdminContactMessages()
+      setContactMessages(data)
+    } catch (error) {
+      setMessage({ type: 'error', text: error.message })
+    } finally {
+      setIsLoadingContactMessages(false)
+    }
+  }, [])
+
+  const loadDashboard = useCallback(function loadDashboard() {
+    loadBookings()
+    loadContactMessages()
+  }, [loadBookings, loadContactMessages])
 
   useEffect(() => {
-    loadBookings()
-  }, [])
+    loadDashboard()
+  }, [loadDashboard])
 
   async function handleStatusUpdate(id, status) {
     setUpdatingId(id)
@@ -135,6 +165,46 @@ function AdminDashboard() {
     }
   }
 
+  async function handleContactMessageStatusUpdate(id, status) {
+    setUpdatingMessageId(id)
+    setMessage({ type: '', text: '' })
+
+    try {
+      await updateContactMessageStatus(id, status)
+      setContactMessages((currentMessages) =>
+        currentMessages.map((contactMessage) =>
+          contactMessage.id === id ? { ...contactMessage, status } : contactMessage,
+        ),
+      )
+      setMessage({ type: 'success', text: `Inquiry marked ${status}.` })
+    } catch (error) {
+      setMessage({ type: 'error', text: error.message })
+    } finally {
+      setUpdatingMessageId('')
+    }
+  }
+
+  async function handleContactMessageDelete(id) {
+    const shouldDelete = window.confirm('Delete this inquiry? This cannot be undone.')
+
+    if (!shouldDelete) {
+      return
+    }
+
+    setUpdatingMessageId(id)
+    setMessage({ type: '', text: '' })
+
+    try {
+      await deleteContactMessage(id)
+      setContactMessages((currentMessages) => currentMessages.filter((contactMessage) => contactMessage.id !== id))
+      setMessage({ type: 'success', text: 'Inquiry deleted.' })
+    } catch (error) {
+      setMessage({ type: 'error', text: error.message })
+    } finally {
+      setUpdatingMessageId('')
+    }
+  }
+
   async function handleLogout() {
     await supabase?.auth.signOut()
     navigate('/admin/login')
@@ -153,7 +223,7 @@ function AdminDashboard() {
           <p>Browse appointments by month, then tap a day to manage bookings.</p>
         </div>
         <div className="admin-header-actions">
-          <Button variant="secondary" onClick={loadBookings} disabled={isLoading}>
+          <Button variant="secondary" onClick={loadDashboard} disabled={isLoading || isLoadingContactMessages}>
             Refresh
           </Button>
           <Button onClick={handleLogout}>Logout</Button>
@@ -272,6 +342,72 @@ function AdminDashboard() {
           </div>
         )}
       </div>
+
+      <section className="admin-inquiries-section sticker-card">
+        <div className="admin-inquiries-header">
+          <div>
+            <p className="eyebrow">Inquiries</p>
+            <h2>Messages</h2>
+            <p>
+              {unreadMessageCount} unread message{unreadMessageCount === 1 ? '' : 's'}
+            </p>
+          </div>
+        </div>
+
+        {isLoadingContactMessages ? (
+          <div className="admin-empty-state compact">
+            <h3>Loading inquiries...</h3>
+          </div>
+        ) : contactMessages.length > 0 ? (
+          <div className="admin-inquiry-list">
+            {contactMessages.map((contactMessage) => {
+              const isUpdatingMessage = updatingMessageId === contactMessage.id
+              const nextStatus = contactMessage.status === 'read' ? 'unread' : 'read'
+
+              return (
+                <article className="admin-inquiry-card" key={contactMessage.id}>
+                  <div className="admin-inquiry-card-header">
+                    <div>
+                      <p className="eyebrow">
+                        {contactMessage.created_at
+                          ? format(parseISO(contactMessage.created_at), 'MMM d, yyyy h:mm a')
+                          : 'New inquiry'}
+                      </p>
+                      <h3>{contactMessage.name}</h3>
+                      <a href={`mailto:${contactMessage.email}`}>{contactMessage.email}</a>
+                    </div>
+                    <span className={`status-pill status-${contactMessage.status}`}>{contactMessage.status}</span>
+                  </div>
+                  <p className="admin-inquiry-message">{contactMessage.message}</p>
+                  <div className="admin-card-actions">
+                    <button
+                      className="admin-action complete"
+                      disabled={isUpdatingMessage}
+                      onClick={() => handleContactMessageStatusUpdate(contactMessage.id, nextStatus)}
+                      type="button"
+                    >
+                      Mark {nextStatus}
+                    </button>
+                    <button
+                      className="admin-action delete"
+                      disabled={isUpdatingMessage}
+                      onClick={() => handleContactMessageDelete(contactMessage.id)}
+                      type="button"
+                    >
+                      Delete inquiry
+                    </button>
+                  </div>
+                </article>
+              )
+            })}
+          </div>
+        ) : (
+          <div className="admin-empty-state compact">
+            <h3>No inquiries yet.</h3>
+            <p>Messages from the Contact page will appear here.</p>
+          </div>
+        )}
+      </section>
     </section>
   )
 }

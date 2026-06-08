@@ -1,4 +1,6 @@
+import { useState } from 'react'
 import Button from '../components/Button'
+import { createContactMessage } from '../lib/contactMessages'
 
 const contactItems = [
   { label: 'Phone', value: '(323) 303-8498' },
@@ -12,6 +14,34 @@ const contactItems = [
 ]
 
 function Contact() {
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [message, setMessage] = useState({ type: '', text: '' })
+
+  async function handleSubmit(event) {
+    event.preventDefault()
+    setMessage({ type: '', text: '' })
+    setIsSubmitting(true)
+
+    const form = event.currentTarget
+    const formData = new FormData(form)
+
+    try {
+      await createContactMessage({
+        name: formData.get('name'),
+        email: formData.get('email'),
+        message: formData.get('message'),
+        status: 'unread',
+      })
+
+      form.reset()
+      setMessage({ type: 'success', text: 'Your message was sent! Manny will get back to you soon.' })
+    } catch (error) {
+      setMessage({ type: 'error', text: error.message })
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
   return (
     <section className="page-section contact-page">
       <div className="section-heading">
@@ -43,7 +73,7 @@ function Contact() {
           </div>
         </div>
 
-        <form className="form-card sticker-card contact-form">
+        <form className="form-card sticker-card contact-form" onSubmit={handleSubmit}>
           <label>
             Name
             <input name="name" type="text" placeholder="Your name" required />
@@ -56,7 +86,10 @@ function Contact() {
             Message
             <textarea name="message" rows="6" placeholder="How can we help?" required />
           </label>
-          <Button type="submit">Send Message</Button>
+          <Button type="submit" disabled={isSubmitting}>
+            {isSubmitting ? 'Sending...' : 'Send Message'}
+          </Button>
+          {message.text && <p className={`booking-message ${message.type}`}>{message.text}</p>}
         </form>
       </div>
     </section>
