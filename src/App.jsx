@@ -3,6 +3,7 @@ import './App.css'
 import Footer from './components/Footer'
 import Navbar from './components/Navbar'
 import ProtectedAdminRoute from './components/ProtectedAdminRoute'
+import ScrollToTop from './components/ScrollToTop'
 import AdminDashboard from './pages/AdminDashboard'
 import AdminLogin from './pages/AdminLogin'
 import About from './pages/About'
@@ -15,6 +16,7 @@ import Home from './pages/Home'
 function App() {
   return (
     <div className="site-shell">
+      <ScrollToTop />
       <Navbar />
       <main>
         <Routes>
