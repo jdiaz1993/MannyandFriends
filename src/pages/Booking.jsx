@@ -106,8 +106,9 @@ const serviceOptions = [
   'Dog Full Groom',
   'Cat Bath Only',
   'Cat Full Groom',
-  'Add-on Service',
 ]
+
+const addOnOptions = ['Dematting', 'Parent Join', 'Additional Time']
 
 function Booking() {
   const [selectedDate, setSelectedDate] = useState()
@@ -165,6 +166,7 @@ function Booking() {
 
     const form = event.currentTarget
     const formData = new FormData(form)
+    const selectedAddOns = formData.getAll('addOns')
 
     setIsSubmitting(true)
 
@@ -189,9 +191,6 @@ function Booking() {
         city_state_zip: formData.get('cityStateZip'),
         owner_home_phone: formData.get('ownerHomePhone'),
         owner_work_phone: formData.get('ownerWorkPhone'),
-        guardian_home_phone: formData.get('guardianHomePhone'),
-        guardian_cell_phone: formData.get('guardianCellPhone'),
-        guardian_work_phone: formData.get('guardianWorkPhone'),
         dog_name: formData.get('dogName'),
         dog_breed: formData.get('breed'),
         pet_type: formData.get('petType'),
@@ -202,6 +201,7 @@ function Booking() {
         pet_color: formData.get('petColor'),
         spayed_neutered: formData.get('spayedNeutered'),
         service_type: formData.get('serviceType'),
+        add_ons: selectedAddOns,
         appointment_date: selectedDateValue,
         appointment_time: selectedTime,
         notes: formData.get('notes'),
@@ -339,23 +339,6 @@ function Booking() {
             </div>
           </fieldset>
           <fieldset className="intake-section full-span">
-            <legend>Guardian Contact</legend>
-            <div className="form-grid compact">
-              <label>
-                Home phone
-                <input name="guardianHomePhone" type="tel" placeholder="Optional" />
-              </label>
-              <label>
-                Cell phone
-                <input name="guardianCellPhone" type="tel" placeholder="Optional" />
-              </label>
-              <label>
-                Work phone
-                <input name="guardianWorkPhone" type="tel" placeholder="Optional" />
-              </label>
-            </div>
-          </fieldset>
-          <fieldset className="intake-section full-span">
             <legend>Pet Information</legend>
             <div className="form-grid compact">
               <label>
@@ -423,6 +406,17 @@ function Booking() {
               ))}
             </select>
           </label>
+          <fieldset className="add-on-options">
+            <legend>Add Ons</legend>
+            <div className="checkbox-group">
+              {addOnOptions.map((addOn) => (
+                <label className="checkbox-option" key={addOn}>
+                  <input name="addOns" type="checkbox" value={addOn} />
+                  <span>{addOn}</span>
+                </label>
+              ))}
+            </div>
+          </fieldset>
           <div className="calendar-field full-span">
             <div>
               <h2>Choose a Date</h2>

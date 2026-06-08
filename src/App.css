@@ -727,6 +727,38 @@ legend {
   margin-bottom: 1rem;
 }
 
+.add-on-options {
+  align-self: end;
+}
+
+.add-on-options legend {
+  font-size: 1rem;
+  margin-bottom: 0.45rem;
+}
+
+.checkbox-group {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.checkbox-option {
+  align-items: center;
+  background: #fffdf4;
+  border: 3px solid #412b35;
+  border-radius: 18px;
+  box-shadow: 0 4px 0 #412b35;
+  cursor: pointer;
+  display: flex;
+  gap: 0.6rem;
+  padding: 0.65rem 0.8rem;
+}
+
+.checkbox-option input {
+  accent-color: #ff8ab3;
+  height: 1.1rem;
+  width: 1.1rem;
+}
+
 input,
 select,
 textarea {

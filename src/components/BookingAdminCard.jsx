@@ -1,6 +1,7 @@
 function BookingAdminCard({ booking, onCancel, onComplete, onDelete, isUpdating }) {
   const status = booking.status || 'confirmed'
   const petType = booking.pet_type === 'Other' && booking.pet_type_other ? booking.pet_type_other : booking.pet_type
+  const addOns = Array.isArray(booking.add_ons) ? booking.add_ons.join(', ') : booking.add_ons
 
   return (
     <article className="admin-booking-card sticker-card">
@@ -36,6 +37,10 @@ function BookingAdminCard({ booking, onCancel, onComplete, onDelete, isUpdating 
           <span>{booking.service_type}</span>
         </p>
         <p>
+          <strong>Add Ons</strong>
+          <span>{addOns || 'None selected'}</span>
+        </p>
+        <p>
           <strong>Notes</strong>
           <span>{booking.notes || 'No notes'}</span>
         </p>
@@ -59,18 +64,6 @@ function BookingAdminCard({ booking, onCancel, onComplete, onDelete, isUpdating 
           <p>
             <strong>Owner work</strong>
             <span>{booking.owner_work_phone || 'Not provided'}</span>
-          </p>
-          <p>
-            <strong>Guardian home</strong>
-            <span>{booking.guardian_home_phone || 'Not provided'}</span>
-          </p>
-          <p>
-            <strong>Guardian cell</strong>
-            <span>{booking.guardian_cell_phone || 'Not provided'}</span>
-          </p>
-          <p>
-            <strong>Guardian work</strong>
-            <span>{booking.guardian_work_phone || 'Not provided'}</span>
           </p>
           <p>
             <strong>Pet type</strong>
