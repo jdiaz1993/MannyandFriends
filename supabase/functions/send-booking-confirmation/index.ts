@@ -16,6 +16,7 @@ function buildEmailHtml(booking: Record<string, string>, cancellationLink: strin
         <li><strong>Service:</strong> ${booking.service_type}</li>
         <li><strong>Date:</strong> ${booking.appointment_date}</li>
         <li><strong>Time:</strong> ${booking.appointment_time}</li>
+        <li><strong>Location:</strong> Snout Studios Pet Grooming, 1640 W Temple St, Los Angeles, CA 90026</li>
       </ul>
       <p>Manny will contact you if any details are needed.</p>
       <p>

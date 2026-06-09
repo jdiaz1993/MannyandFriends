@@ -27,7 +27,7 @@ const services = [
 const homeHighlights = [
   {
     title: 'Kennel Free',
-    text: 'We are a kennel-free grooming salon, which means that your dog will stay with us in our playroom during their grooming appointment. This allows us to give your dog the individual attention they need, and it also helps to reduce stress for shy or anxious dogs.',
+    text: 'Manny grooms out of Snout Studios Pet Grooming, a kennel-free grooming salon where your dog can stay with us in the playroom during their appointment. This allows us to give your dog the individual attention they need, and it also helps to reduce stress for shy or anxious dogs.',
     size: 'wide',
   },
   {
@@ -116,7 +116,7 @@ function Home() {
         <span aria-hidden="true">🫧</span>
         <div>
           <h2>Clean coats, calm pups, cheerful humans.</h2>
-          <p>Manny keeps grooming sweet, sanitary, and stress-aware from hello to pickup.</p>
+          <p>Appointments take place at Snout Studios Pet Grooming in Los Angeles.</p>
         </div>
       </section>
     </>

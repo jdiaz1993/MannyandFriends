@@ -239,7 +239,7 @@ function Booking() {
         <p className="eyebrow">Appointments</p>
         <h1>Book a Grooming Visit</h1>
         <p>
-          Choose an available date and time, then submit to confirm your appointment.
+          Choose an available date and time for your appointment at Snout Studios Pet Grooming.
         </p>
       </div>
 

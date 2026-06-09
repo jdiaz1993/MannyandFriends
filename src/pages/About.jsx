@@ -7,11 +7,12 @@ function About() {
           <h1>Hi, I'm Manny.</h1>
           <p>
             I am passionate about providing the best grooming experience for your fur
-            babies. They are allowed to move freely in our kennel-free facility, which helps
-            prevent separation anxiety. They are also allowed to settle down or self-soothe
-            before we get started. I will provide a one-on-one experience for your dogs
-            which allows them to bond with me and creates trust not only between your fur
-            baby and myself, but also with the paw-rents.
+            babies at Snout Studios Pet Grooming. They are allowed to move freely in our
+            kennel-free facility, which helps prevent separation anxiety. They are also
+            allowed to settle down or self-soothe before we get started. I will provide a
+            one-on-one experience for your dogs which allows them to bond with me and
+            creates trust not only between your fur baby and myself, but also with the
+            paw-rents.
           </p>
           <p>
             I have several years of experience specializing in doodles, and I take pride in

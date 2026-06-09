@@ -1473,6 +1473,7 @@ textarea {
 .gallery-image {
   align-items: center;
   aspect-ratio: 4 / 3;
+  background: linear-gradient(135deg, #fff8cf, #ffbdd3);
   border: 3px solid #412b35;
   border-radius: 24px;
   display: flex;
@@ -1481,44 +1482,11 @@ textarea {
   position: relative;
 }
 
-.placeholder-pink .gallery-image {
-  background: linear-gradient(135deg, #ffbdd3, #fff8cf);
-}
-
-.placeholder-blue .gallery-image {
-  background: linear-gradient(135deg, #8cd8ff, #fff8cf);
-}
-
-.placeholder-yellow .gallery-image {
-  background: linear-gradient(135deg, #ffec8b, #ffbdd3);
-}
-
-.dog-face {
-  font-size: clamp(4rem, 12vw, 7rem);
-  z-index: 1;
-}
-
-.sparkle {
-  color: #fff8cf;
-  font-size: 3rem;
-  left: 12%;
-  position: absolute;
-  text-shadow: 2px 2px 0 #412b35;
-  top: 8%;
-}
-
-.bubble-one {
-  height: 38px;
-  right: 16%;
-  top: 20%;
-  width: 38px;
-}
-
-.bubble-two {
-  bottom: 16%;
-  height: 26px;
-  left: 18%;
-  width: 26px;
+.gallery-photo {
+  display: block;
+  height: 100%;
+  object-fit: contain;
+  width: 100%;
 }
 
 .gallery-card figcaption {
@@ -1579,23 +1547,37 @@ textarea {
 }
 
 .map-placeholder {
-  align-items: center;
-  background:
-    linear-gradient(45deg, rgba(65, 43, 53, 0.08) 25%, transparent 25% 50%, rgba(65, 43, 53, 0.08) 50% 75%, transparent 75%),
-    #dff4ff;
-  background-size: 28px 28px;
+  background: #fffbd1;
   border: 3px solid #412b35;
   border-radius: 24px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   margin-top: 1.25rem;
   min-height: 210px;
+  overflow: hidden;
   text-align: center;
 }
 
-.map-placeholder span {
-  font-size: 3rem;
+.map-embed {
+  border: 0;
+  display: block;
+  height: 260px;
+  width: 100%;
+}
+
+.map-details {
+  background: #fffbd1;
+  padding: 0.85rem;
+}
+
+.map-details p {
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.15rem;
+  margin: 0 0 0.25rem;
+}
+
+.map-details a {
+  color: #111116;
+  display: inline-block;
+  font-weight: 700;
 }
 
 .contact-form {
@@ -1728,8 +1710,7 @@ label,
 .filter-chip,
 .admin-action.cancel,
 .status-confirmed,
-.price-blue,
-.placeholder-blue .gallery-image {
+.price-blue {
   background: #11a9c9;
 }
 
@@ -1832,7 +1813,6 @@ textarea,
 }
 
 .service-card:nth-child(2n),
-.placeholder-pink .gallery-image,
 .price-cream {
   background: #fff56b;
 }
@@ -1858,15 +1838,6 @@ textarea,
   box-shadow: 12px 12px 0 rgba(17, 17, 22, 0.36), 0 0 18px rgba(183, 255, 61, 0.8);
 }
 
-.placeholder-blue .gallery-image,
-.placeholder-yellow .gallery-image {
-  background: linear-gradient(135deg, #11a9c9, #fff200);
-}
-
-.placeholder-pink .gallery-image {
-  background: linear-gradient(135deg, #ff40b2, #11a9c9);
-}
-
 .rdp-root {
   --rdp-accent-color: #ff40b2;
   --rdp-accent-background-color: #ff40b2;
@@ -1887,13 +1858,6 @@ textarea,
 .time-slot:disabled {
   background: #c9c9c9;
   color: rgba(17, 17, 22, 0.58);
-}
-
-.map-placeholder {
-  background:
-    linear-gradient(45deg, rgba(17, 17, 22, 0.09) 25%, transparent 25% 50%, rgba(17, 17, 22, 0.09) 50% 75%, transparent 75%),
-    #11a9c9;
-  background-size: 28px 28px;
 }
 
 .footer {

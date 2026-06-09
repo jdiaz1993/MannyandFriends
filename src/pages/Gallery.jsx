@@ -1,12 +1,12 @@
 import GalleryCard from '../components/GalleryCard'
 
 const galleryItems = [
-  { caption: 'Before & After', color: 'pink' },
-  { caption: 'Fresh Groom', color: 'blue' },
-  { caption: 'Happy Pup', color: 'yellow' },
-  { caption: 'Fluffy Finish', color: 'blue' },
-  { caption: 'Bubble Bath', color: 'yellow' },
-  { caption: 'Doodle Glow-Up', color: 'pink' },
+  { caption: 'Fresh Groom', image: '/manny%20clients/dog1.png' },
+  { caption: 'Happy Pup', image: '/manny%20clients/dog2.png' },
+  { caption: 'Fluffy Finish', image: '/manny%20clients/dog3.png' },
+  { caption: 'Clean Cut', image: '/manny%20clients/dog4.png' },
+  { caption: 'Doodle Style', image: '/manny%20clients/dog5.png' },
+  { caption: 'Pampered Pup', image: '/manny%20clients/dog6.png' },
 ]
 
 function Gallery() {
@@ -15,12 +15,12 @@ function Gallery() {
       <div className="section-heading">
         <p className="eyebrow">Gallery</p>
         <h1>Fresh Fur Hall of Fame</h1>
-        <p>Placeholder photo cards are ready to swap with real grooming photos later.</p>
+        <p>A few examples of Manny&apos;s grooming work and happy client pups.</p>
       </div>
 
       <div className="gallery-grid">
         {galleryItems.map((item, index) => (
-          <GalleryCard key={`${item.caption}-${index}`} index={index + 1} {...item} />
+          <GalleryCard key={`${item.caption}-${index}`} {...item} />
         ))}
       </div>
     </section>

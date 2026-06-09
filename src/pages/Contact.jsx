@@ -6,11 +6,21 @@ const contactItems = [
   { label: 'Phone', value: '(323) 303-8498' },
   { label: 'Email', value: 'manueledvasquez@gmail.com' },
   {
+    label: 'Location',
+    value: 'Snout Studios Pet Grooming',
+    href: 'https://www.google.com/maps/search/?api=1&query=1640%20W%20Temple%20St%2C%20Los%20Angeles%2C%20CA%2090026',
+  },
+  {
+    label: 'Address',
+    value: '1640 W Temple St, Los Angeles, CA 90026',
+    href: 'https://www.google.com/maps/search/?api=1&query=1640%20W%20Temple%20St%2C%20Los%20Angeles%2C%20CA%2090026',
+  },
+  {
     label: 'Instagram',
     value: '@doodlesandfriendsbymanny',
     href: 'https://www.instagram.com/doodlesandfriendsbymanny',
   },
-  { label: 'Service area', value: 'Local doodles, pups, and furry friends' },
+  { label: 'Appointments', value: 'Grooming visits are hosted at Snout Studios Pet Grooming.' },
 ]
 
 function Contact() {
@@ -67,9 +77,25 @@ function Contact() {
               </p>
             ))}
           </div>
-          <div className="map-placeholder" role="img" aria-label="Map placeholder">
-            <span>📍</span>
-            <p>Map placeholder</p>
+          <div className="map-placeholder">
+            <iframe
+              className="map-embed"
+              title="Snout Studios Pet Grooming map"
+              src="https://www.google.com/maps?q=1640%20W%20Temple%20St%2C%20Los%20Angeles%2C%20CA%2090026&output=embed"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+            <div className="map-details">
+              <p>Snout Studios Pet Grooming</p>
+              <a
+                className="contact-link"
+                href="https://www.google.com/maps/search/?api=1&query=1640%20W%20Temple%20St%2C%20Los%20Angeles%2C%20CA%2090026"
+                target="_blank"
+                rel="noreferrer"
+              >
+                1640 W Temple St, Los Angeles, CA 90026
+              </a>
+            </div>
           </div>
         </div>
 
