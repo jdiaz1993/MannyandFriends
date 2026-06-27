@@ -2,11 +2,13 @@ import { requireSupabase } from './supabase'
 
 const timeOrder = {
   '9:00 AM': 1,
-  '10:30 AM': 2,
-  '12:00 PM': 3,
-  '1:30 PM': 4,
-  '3:00 PM': 5,
-  '4:30 PM': 6,
+  '10:00 AM': 2,
+  '10:30 AM': 3,
+  '12:00 PM': 4,
+  '12:30 PM': 5,
+  '1:30 PM': 6,
+  '3:00 PM': 7,
+  '4:30 PM': 8,
 }
 
 function sortBookings(bookings) {

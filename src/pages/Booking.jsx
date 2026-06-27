@@ -98,7 +98,7 @@ const addOns = [
   },
 ]
 
-const timeSlots = ['9:00 AM', '10:30 AM', '12:00 PM', '1:30 PM', '3:00 PM', '4:30 PM']
+const timeSlots = ['10:00 AM', '12:30 PM', '3:00 PM']
 
 const serviceOptions = [
   'Dog Bath Only',
