@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { DayPicker } from 'react-day-picker'
 import 'react-day-picker/style.css'
-import { format, isBefore, startOfDay } from 'date-fns'
+import { addDays, format, isBefore, startOfDay } from 'date-fns'
 import Button from '../components/Button'
 import { createBooking, getBookedSlots, isSlotBooked, sendBookingConfirmation } from '../lib/bookings'
 
@@ -119,6 +119,7 @@ function Booking() {
   const [message, setMessage] = useState({ type: '', text: '' })
 
   const today = useMemo(() => startOfDay(new Date()), [])
+  const earliestBookableDate = useMemo(() => addDays(today, 1), [today])
   const selectedDateValue = selectedDate ? format(selectedDate, 'yyyy-MM-dd') : ''
 
   useEffect(() => {
@@ -161,6 +162,14 @@ function Booking() {
 
     if (!selectedDateValue || !selectedTime) {
       setMessage({ type: 'error', text: 'Please choose an appointment date and time slot.' })
+      return
+    }
+
+    if (isBefore(startOfDay(selectedDate), earliestBookableDate)) {
+      setMessage({
+        type: 'error',
+        text: 'Please choose a date at least one day in advance.',
+      })
       return
     }
 
@@ -417,13 +426,13 @@ function Booking() {
           <div className="calendar-field full-span">
             <div>
               <h2>Choose a Date</h2>
-              <p>Past dates are closed for booking.</p>
+              <p>Appointments must be booked at least one day in advance.</p>
             </div>
             <DayPicker
               mode="single"
               selected={selectedDate}
               onSelect={setSelectedDate}
-              disabled={(date) => isBefore(startOfDay(date), today)}
+              disabled={(date) => isBefore(startOfDay(date), earliestBookableDate)}
               footer={selectedDate ? `Selected date: ${format(selectedDate, 'MMMM d, yyyy')}` : ''}
             />
           </div>
